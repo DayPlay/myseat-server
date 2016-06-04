@@ -49,4 +49,4 @@ test:
 #
 production:
   <<: *default
-  database: myseat-production
+  database: myseat
