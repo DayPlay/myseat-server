@@ -13,9 +13,34 @@ class UsersController < ApplicationController
   end
 
   def sign_in
+    email = params.require(:user).fetch(:email, nil)
+    password = params.require(:user).fetch(:password, nil)
+    user_id = params.require(:user).fetch(:user_id, nil)
+    auth_token = params.require(:user).fetch(:auth_token, nil)
+
+    checked = false
+    if !user_id.nil? && !auth_token.nil?
+      @user = User.find_by id: user_id 
+      checked = @user.auth_token == auth_token unless @user.nil?
+    elsif !email.nil? && !password.nil?
+      @user = User.find_by email: email
+      checked = @user.get_password == User.parse_password(password) unless @user.nil?
+    else
+      return render json: { msg: "give me user info" }, status: :bad_request
+    end
+
+    return render json: { msg: "not fount user" }, status: :not_found if @user.nil? || checked == false
   end
 
   def sign_out
+    user_id = params.require(:user).fetch(:user_id, nil)
+    return render json: { msg: "give me user info" }, status: :bad_request if user_id.nil?
+
+    @user = User.find_by id: user_id
+    return render json: { msg: "not fount user" }, status: :not_found if @user.nil?
+
+    @user.deleted_at = DateTime.now
+    @user.save
   end
 
 	private
