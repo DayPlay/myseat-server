@@ -24,7 +24,7 @@ ActiveRecord::Schema.define(version: 20160605221509) do
     t.integer  "point",                  limit: 4,   default: 0,     null: false
     t.string   "phone",                  limit: 255
     t.datetime "birthday"
-    t.boolean  "has_noti",               limit: 1,   default: false, null: false
+    t.boolean  "has_noti",               limit: 1,   default: true,  null: false
     t.boolean  "is_partner",             limit: 1,   default: false, null: false
     t.boolean  "is_admin",               limit: 1,   default: false, null: false
     t.string   "reset_password_token",   limit: 255
