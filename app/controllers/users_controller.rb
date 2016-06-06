@@ -5,12 +5,11 @@ class UsersController < ApplicationController
   end
 
   def sign_up
-  	@user = User.new(user_sign_up_params)
-    @user.birthday = Time.at(params[:user][:birthday]).strftime('%m-%d-%Y') unless params[:user][:birthday].empty?
-  	@user.save
-
-    # @user.auth_token = params[:user][:auth_token]
-  	# puts request.body
+    @user = User.new(user_sign_up_params)
+    @user.save_password
+    @user.convert_birthday(params[:user][:birthday])
+    @user.save_auth_token
+    @user.save
   end
 
   def sign_in
@@ -21,7 +20,7 @@ class UsersController < ApplicationController
 
 	private
   	def user_sign_up_params
-    	params.require(:user).permit(:email, :nickname, :gender, :phone)
+    	params.require(:user).permit(:email, :encrypted_password, :nickname, :gender, :phone, :birthday, :has_noti, :is_partner, :is_admin)
   	end
 
 		def user_sign_in_params
