@@ -34,10 +34,14 @@ class UsersController < ApplicationController
 
   def sign_out
     user_id = params.require(:user).fetch(:user_id, nil)
-    return render json: { msg: "give me user info" }, status: :bad_request if user_id.nil?
+    auth_token = params.require(:user).fetch(:auth_token, nil)
+
+    return render json: { msg: "give me user info" }, status: :bad_request if user_id.nil? || auth_token.nil?
 
     @user = User.find_by id: user_id
-    return render json: { msg: "not fount user" }, status: :not_found if @user.nil?
+    checked = false
+    checked = @user.auth_token == auth_token unless @user.nil?
+    return render json: { msg: "not fount user" }, status: :not_found if @user.nil? || checked == false
 
     @user.deleted_at = DateTime.now
     @user.save
