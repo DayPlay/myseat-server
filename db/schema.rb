@@ -11,7 +11,16 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160605221509) do
+ActiveRecord::Schema.define(version: 20160616124306) do
+
+  create_table "user_part_time_jobs", force: :cascade do |t|
+    t.integer  "user_id",    limit: 4
+    t.integer  "start_time", limit: 4
+    t.integer  "end_time",   limit: 4
+    t.datetime "created_at",           null: false
+    t.datetime "updated_at",           null: false
+    t.datetime "deleted_at"
+  end
 
   create_table "users", force: :cascade do |t|
     t.string   "email",                  limit: 255, default: "",    null: false
@@ -27,6 +36,7 @@ ActiveRecord::Schema.define(version: 20160605221509) do
     t.boolean  "has_noti",               limit: 1,   default: true,  null: false
     t.boolean  "is_partner",             limit: 1,   default: false, null: false
     t.boolean  "is_admin",               limit: 1,   default: false, null: false
+    t.integer  "work_place_id",          limit: 4
     t.string   "reset_password_token",   limit: 255
     t.datetime "reset_password_sent_at"
     t.datetime "created_at",                                         null: false

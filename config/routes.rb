@@ -12,6 +12,8 @@ Rails.application.routes.draw do
   post 'users/sign_in'  => 'users#sign_in'
   post 'users/sign_out' => 'users#sign_out'
 
+  post 'users/sign_up_part_time_job' => 'users#sign_up_part_time_job'
+
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'
 

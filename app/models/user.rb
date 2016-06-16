@@ -1,6 +1,7 @@
 class User < ActiveRecord::Base
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
+  belongs_to :user_part_time_jobs
 
   def convert_birthday (birthday)
   	self.birthday = Time.at(birthday / 1000).to_date

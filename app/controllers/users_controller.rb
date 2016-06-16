@@ -47,10 +47,22 @@ class UsersController < ApplicationController
     @user.save
   end
 
+  def sign_up_part_time_job
+    @user = User.new(user_sign_up_part_time_job_params)
+    @user.save_password
+    @user.convert_birthday(params[:user][:birthday])
+    @user.save_auth_token
+    @user.save
+  end
+
 	private
   	def user_sign_up_params
     	params.require(:user).permit(:email, :encrypted_password, :nickname, :gender, :phone, :birthday, :has_noti, :is_partner, :is_admin)
   	end
+
+    def user_sign_up_part_time_job_params
+      params.require(:user).permit(:email, :encrypted_password, :nickname, :gender, :phone, :birthday, :has_noti, :is_partner, :is_admin, :work_place_id)
+    end
 
 		def user_sign_in_params
 			params.require(:user).permit(:email, :password)
